@@ -24,6 +24,7 @@ public class Vehicle extends Vehicles implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String description;
+    private List<String> list;
 
     public String getDescription() {
         return description;
@@ -81,11 +82,12 @@ public class Vehicle extends Vehicles implements Serializable {
         this.productType = productType;
     }
 
-    public List<String> getImgList() {
+   
+    public List<Image> getImgList() {
         return imgList;
     }
 
-    public void setImgList(List<String> imgList) {
+    public void setImgList(List<Image> imgList) {
         this.imgList = imgList;
     }
     
