@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
@@ -31,8 +32,8 @@
                     <h:outputText value="#{vehicleController.selected.productType}" title="#{bundle.ViewVehicleTitle_productType}"/>
                     <h:outputText value="#{bundle.ViewVehicleLabel_imgList}"/>
                     
-                    <p:galleria value="#{vehicleController.selected.imgList}" var="image" panelWidth="500" panelHeight="313" showCaption="true">  
-                        <p:graphicImage value="#{image.imgURL}" alt="Image Description for #{image.description}" title="#{image.description}"/>  
+                    <p:galleria value="#{vehicleController.selected.imagesList}" var="image" panelWidth="500" panelHeight="313" showCaption="true">  
+                        <p:graphicImage value="/resources/Images/Vehicles/#{image.imgURL}" alt="Image Description for #{image.description}" title="#{image.caption}"/>  
                     </p:galleria>  
                     
                     <h:outputText value="#{bundle.ViewVehicleLabel_id}"/>

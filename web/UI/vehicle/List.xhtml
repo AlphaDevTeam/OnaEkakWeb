@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
@@ -64,9 +65,13 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListVehicleTitle_imgList}"/>
+                                <h:outputText value="Mihi #{bundle.ListVehicleTitle_imgList}"/>
                             </f:facet>
-                            <h:outputText value="#{item.imgList}"/>
+                            <p:galleria value="#{item.imagesList}" var="image" panelWidth="250" panelHeight="250" showCaption="true">  
+                                <p:graphicImage value="/resources/Images/Vehicles/#{image.imgURL}" alt="Image Description for #{image.description}" title="#{image.caption}"/>  
+                            </p:galleria>  
+                            <h:graphicImage name="Images/Vehicles/vehicle_323_small.jpg" value="Images/Vehicles/vehicle_323.jpg"/>
+                            <h:graphicImage name="Images/Vehicles/Verified.png" value="Images/Vehicles/Verified.png"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">

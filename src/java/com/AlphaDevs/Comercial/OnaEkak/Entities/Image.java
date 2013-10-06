@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -21,6 +22,9 @@ public class Image implements Serializable {
     private Long id;
     private String description;
     private String imgURL;
+    private String caption;
+    @ManyToOne
+    private Vehicle vehicle;
 
     public Image() {
     }
@@ -44,6 +48,22 @@ public class Image implements Serializable {
 
     public void setImgURL(String imgURL) {
         this.imgURL = imgURL;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
     
     public Long getId() {

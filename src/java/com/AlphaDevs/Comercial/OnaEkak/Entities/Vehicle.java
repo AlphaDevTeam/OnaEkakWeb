@@ -4,12 +4,14 @@ package com.AlphaDevs.Comercial.OnaEkak.Entities;
 import com.AlphaDevs.Comercial.OnaEkak.Core.Vehicles;
 import com.AlphaDevs.Comercial.OnaEkak.Enums.ProductType;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -24,7 +26,8 @@ public class Vehicle extends Vehicles implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String description;
-    private List<String> list;
+    @OneToMany(mappedBy = "vehicle")
+    protected List<Image> imagesList;
 
     public String getDescription() {
         return description;
@@ -82,15 +85,29 @@ public class Vehicle extends Vehicles implements Serializable {
         this.productType = productType;
     }
 
-   
-    public List<Image> getImgList() {
-        return imgList;
+    public String getThumbnailImageURI() {
+        String tumbImage = "";
+        if(getImagesList() != null && getImagesList().get(0) !=null ){
+           tumbImage = getImagesList().get(0).getImgURL();
+        }
+        return tumbImage ;
     }
 
-    public void setImgList(List<Image> imgList) {
-        this.imgList = imgList;
+    public void setThumbnailImageURI(String thumbnailImageURI) {
+        this.thumbnailImageURI = thumbnailImageURI;
     }
+
     
+
+    public List<Image> getImagesList() {
+        return imagesList;
+    }
+
+    public void setImagesList(List<Image> imagesList) {
+        this.imagesList = imagesList;
+    }
+
+   
     
     public Long getId() {
         return id;

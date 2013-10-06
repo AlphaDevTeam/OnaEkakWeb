@@ -28,11 +28,15 @@
                     <h:inputText id="price" value="#{vehicleController.selected.price}" title="#{bundle.CreateVehicleTitle_price}" />
                     <h:outputLabel value="#{bundle.CreateVehicleLabel_productType}" for="productType" />
                     <h:inputText id="productType" value="#{vehicleController.selected.productType}" title="#{bundle.CreateVehicleTitle_productType}" />
-                    
+                    <h:outputLabel value="#{bundle.CreateVehicleLabel_thumbnailImageURI}" for="thumbnailImageURI" />
+                    <h:inputText id="thumbnailImageURI" value="#{vehicleController.selected.thumbnailImageURI}" title="#{bundle.CreateVehicleTitle_thumbnailImageURI}" />
+                    <h:outputLabel value="#{bundle.CreateVehicleLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{vehicleController.selected.id}" title="#{bundle.CreateVehicleTitle_id}" />
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{vehicleController.create}" value="#{bundle.CreateVehicleSaveLink}" />
                 <br />
+                
                 <br />
                 <h:commandLink action="#{vehicleController.prepareList}" value="#{bundle.CreateVehicleShowAllLink}" immediate="true"/>
                 <br />

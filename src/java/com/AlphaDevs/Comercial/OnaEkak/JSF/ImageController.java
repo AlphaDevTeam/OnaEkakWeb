@@ -1,15 +1,11 @@
 package com.AlphaDevs.Comercial.OnaEkak.JSF;
 
 import com.AlphaDevs.Comercial.OnaEkak.Entities.Image;
-import com.AlphaDevs.Comercial.OnaEkak.Entities.Vehicle;
 import com.AlphaDevs.Comercial.OnaEkak.JSF.util.JsfUtil;
 import com.AlphaDevs.Comercial.OnaEkak.JSF.util.PaginationHelper;
 import com.AlphaDevs.Comercial.OnaEkak.SessionBeans.ImageFacade;
-import com.AlphaDevs.Comercial.OnaEkak.SessionBeans.VehicleFacade;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -22,37 +18,36 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@Named("vehicleController")
-@SessionScoped
-public class VehicleController implements Serializable {
 
-    @EJB
-    private ImageFacade imageFacade;
-    private Vehicle current;
+@Named("imageController")
+@SessionScoped
+public class ImageController implements Serializable {
+
+
+    private Image current;
     private DataModel items = null;
-    @EJB
-    private com.AlphaDevs.Comercial.OnaEkak.SessionBeans.VehicleFacade ejbFacade;
+    @EJB private com.AlphaDevs.Comercial.OnaEkak.SessionBeans.ImageFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public VehicleController() {
+    public ImageController() {
     }
 
-    public Vehicle getSelected() {
+    public Image getSelected() {
         if (current == null) {
-            current = new Vehicle();
+            current = new Image();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private VehicleFacade getFacade() {
+    private ImageFacade getFacade() {
         return ejbFacade;
     }
-
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
+
                 @Override
                 public int getItemsCount() {
                     return getFacade().count();
@@ -60,7 +55,7 @@ public class VehicleController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}));
                 }
             };
         }
@@ -73,13 +68,13 @@ public class VehicleController implements Serializable {
     }
 
     public String prepareView() {
-        current = (Vehicle) getItems().getRowData();
+        current = (Image)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new Vehicle();
+        current = new Image();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -87,7 +82,7 @@ public class VehicleController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("VehicleCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ImageCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -96,7 +91,7 @@ public class VehicleController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (Vehicle) getItems().getRowData();
+        current = (Image)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -104,7 +99,7 @@ public class VehicleController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("VehicleUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ImageUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -113,7 +108,7 @@ public class VehicleController implements Serializable {
     }
 
     public String destroy() {
-        current = (Vehicle) getItems().getRowData();
+        current = (Image)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -137,7 +132,7 @@ public class VehicleController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("VehicleDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ImageDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -147,14 +142,14 @@ public class VehicleController implements Serializable {
         int count = getFacade().count();
         if (selectedItemIndex >= count) {
             // selected index cannot be bigger than number of items:
-            selectedItemIndex = count - 1;
+            selectedItemIndex = count-1;
             // go to previous page if last page disappeared:
             if (pagination.getPageFirstItem() >= count) {
                 pagination.previousPage();
             }
         }
         if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
+            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex+1}).get(0);
         }
     }
 
@@ -193,21 +188,21 @@ public class VehicleController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public Vehicle getVehicle(java.lang.Long id) {
+    public Image getImage(java.lang.Long id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Vehicle.class)
-    public static class VehicleControllerConverter implements Converter {
+    @FacesConverter(forClass=Image.class)
+    public static class ImageControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            VehicleController controller = (VehicleController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "vehicleController");
-            return controller.getVehicle(getKey(value));
+            ImageController controller = (ImageController)facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "imageController");
+            return controller.getImage(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -227,12 +222,14 @@ public class VehicleController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Vehicle) {
-                Vehicle o = (Vehicle) object;
+            if (object instanceof Image) {
+                Image o = (Image) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Vehicle.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: "+Image.class.getName());
             }
         }
+
     }
+
 }

@@ -21,7 +21,7 @@ public class Products {
     protected Date createdDate;
     protected Double price;
     protected ProductType productType;
-    @OneToMany
-    protected List<Image> imgList;
+    protected String thumbnailImageURI;
+    
     
 }
